@@ -1,0 +1,2 @@
+**what is mongoose**
+``` Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js. It provides a way to define schemas for your MongoDB collections and interact with the database using JavaScript objects.```
