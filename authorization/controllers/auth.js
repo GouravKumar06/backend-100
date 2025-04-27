@@ -64,12 +64,12 @@ exports.loginUser = async(req,res) => {
         }
 
         const token = jwt.sign({ id: existUser._id }, process.env.JWT_SECRET, {
-          expiresIn: 1000 * 20,
+          expiresIn: 1000 * 60 * 60 * 24,
         });
 
         res.cookie("token", token, {
           httpOnly: true,
-          maxAge: 1000 * 20,
+          maxAge: 1000 * 60 * 60 * 24,
         });
 
         return res.status(200).json({

@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 // local import
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const imageRoutes = require('./routes/imageRoutes');
 
 // Initialize express app
 const app = express();
@@ -17,6 +18,7 @@ app.use(cookieParser());
 
 //local middleware
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/image', imageRoutes);
 
 const PORT = process.env.PORT || 3000;
 
