@@ -101,3 +101,65 @@ exports.adminOnly = async (req, res) => {
         res.status(500).json({message: "Server error"});
     }
 }
+
+
+exports.changePassword = async(req,res) =>{
+    try{
+        if(!req.user){
+            return res.status(401).json({message: "Unauthorized access"});
+        }
+
+        const user = await User.findById(req.user.id);
+
+        if(!user){
+            return res.status(404).json({message: "User not found"});
+        }
+
+
+        const { oldPassword, newPassword } = req.body;
+
+        const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+
+        if(!passwordMatch){
+            return res.status(400).json({message: "Invalid old password"});
+        }
+
+        if(oldPassword === newPassword){
+            return res.status(400).json({message: "New password cannot be same as old password"});
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        const updateUser = await User.findByIdAndUpdate(
+          req.user.id,
+          {
+            $set: {
+              password: hashedPassword,
+              passwordChangedAt: Date.now(),
+            },
+          },
+          { new: true }
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: "Password changed successfully",
+            data: updateUser,
+        });
+
+    }catch(error){
+        console.error(error.message);
+        res.status(500).json({message: "Server error"});
+    }
+}
+
+
+exports.deleteUser = async(req,res) => {
+    try{
+        
+
+    }catch(error){
+        console.error(error.message);
+        res.status(500).json({ message: "Server error" });
+    }
+}
