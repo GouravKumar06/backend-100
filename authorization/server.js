@@ -27,6 +27,10 @@ app.get('/authorize', (req, res) => {
     res.send('Hello, World!');
 });
 
+app.get('/', (req, res) => {
+  res.send('Hello, World from authorization server!');
+})
+
 // Connect to MongoDB
 connectDB();
 
